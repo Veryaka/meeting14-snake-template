@@ -25,15 +25,41 @@
       
         <h1>Snake Game</h1>
         <p>Score :  <span id="score"> </span></p>
+
         <!-- Step 1. Create Canvas-->
-        <canvas></canvas>
+        <canvas
+        width="400"
+        height="400"
+        id="game"
+        style="background-color:rgb(0, 47, 255)"
+        ></canvas>
       
     </body>
 
     <script>
        
         // Step 2. Acces Canvas & Context
-       
+       var canvas = document.getElementById("game");
+       var ctx = canvas.getContext("2d");
+       var score = 0;
+       var grid = 16;
+       var count = 0;
+
+       var snake ={
+        x: 160,
+        y: 160,
+        dx: grid,
+        dy: 0,
+        cells: [],
+        maxCells:200,
+       };
+
+       var apple = {
+        x:320,
+        y:320,
+       };
+
+
 
         // Step 3. Initialize Variable
       
@@ -42,7 +68,7 @@
         
 
         // step 5. Key Arrow Controller
-        document.addEventListener('keydown', function(e) {
+       
              
 
         function getRandomInt(min, max) {
@@ -55,6 +81,7 @@
             if (++count < 6) {
                 return;
             }
+            
 
             count = 0;
             ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -123,8 +150,24 @@
         });
         }
 
-
-       
+        document.addEventListener('keydown', function(e){
+            if(e.which === 37 && snake.dx === 0){
+                snake.dx = -grid;
+                snake.dy = 0;
+            } 
+            else if(e.which === 38 && snake.dy === 0){
+                snake.dy = -grid;
+                snake.dx = 0;
+            } 
+            else if(e.which === 39 && snake.dx === 0){
+                snake.dx = grid;
+                snake.dy = 0;
+            } 
+            else if(e.which === 40 && snake.dy === 0){
+                snake.dy = grid;
+                snake.dx = 0;
+            }    
+        });
         requestAnimationFrame(loop);
  
 
